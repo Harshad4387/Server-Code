@@ -5,8 +5,12 @@ const app = express();
 
 const PORT = 3000;
 
-// Middleware
 app.use(express.json());
+
+// Health check for AWS Load Balancer
+app.get('/health', (req, res) => {
+    res.status(200).send('Healthy');
+});
 
 // Home route
 app.get('/', (req, res) => {
@@ -23,6 +27,6 @@ app.get('/api/users', (req, res) => {
 });
 
 // Start server
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on port ${PORT}`);
 });
